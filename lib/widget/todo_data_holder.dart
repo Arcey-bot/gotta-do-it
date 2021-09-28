@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:gotta_do_it/model/todo.dart';
+import 'package:gotta_do_it/util/shared_prefs.dart';
 
 /* This Widget wraps around the InheritedWidget and essentially
   allows the InheritedWidet to be treated like a mutable object.
@@ -21,10 +23,9 @@ class StateContainer extends StatefulWidget {
 }
 
 class _StateContainerState extends State<StateContainer> {
-  List<ToDo> todos = List.empty(growable: true);
+  List<ToDo> todos = SharedPrefs().todos;
 
   void updateToDoList(List<ToDo> newTodos) {
-    print('updateToDoList - ' + newTodos.toString());
     setState(() {
       todos = newTodos;
     });
@@ -32,7 +33,6 @@ class _StateContainerState extends State<StateContainer> {
 
   @override
   Widget build(BuildContext context) {
-    print('_StateContainerState build - ' + todos.toString());
     return InheritedData(
       todos: todos,
       stateWidget: this,
@@ -52,18 +52,14 @@ class InheritedData extends InheritedWidget {
     required this.todos,
     required this.stateWidget,
     required Widget child,
-  })  : assert(todos != null),
-        assert(stateWidget != null),
-        assert(child != null),
-        super(key: key, child: child);
+  }) : super(key: key, child: child);
 
   static _StateContainerState of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<InheritedData>()!.stateWidget;
 
   @override
   bool updateShouldNotify(InheritedData oldWidget) {
-    print('Updateshouldnotify - ' + todos.toString());
-    // return oldWidget.todos != todos || oldWidget.onToDoUpdate != onToDoUpdate;
-    return true;
+    return oldWidget.todos != todos;
+    // return true;
   }
 }

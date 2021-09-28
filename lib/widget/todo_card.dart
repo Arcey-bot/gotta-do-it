@@ -14,7 +14,7 @@ class ToDoCard extends StatelessWidget {
       child: Center(
         child: Row(
           children: <Widget>[
-            const ToDoToggleButton(),
+            ToDoToggleButton(task: todo),
             Expanded(
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -32,22 +32,24 @@ class ToDoCard extends StatelessWidget {
 }
 
 class ToDoToggleButton extends StatefulWidget {
-  const ToDoToggleButton({Key? key}) : super(key: key);
+  final ToDo task;
+  const ToDoToggleButton({
+    Key? key,
+    required this.task,
+  }) : super(key: key);
 
   @override
   _ToDoToggleButtonState createState() => _ToDoToggleButtonState();
 }
 
 class _ToDoToggleButtonState extends State<ToDoToggleButton> {
-  bool isToggled = false;
-
   @override
   Widget build(BuildContext context) {
     return Checkbox(
-      value: isToggled,
+      value: widget.task.done,
       onChanged: (bool? value) {
         setState(() {
-          isToggled = value!;
+          widget.task.done = value!;
         });
       },
     );
