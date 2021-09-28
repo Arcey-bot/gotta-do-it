@@ -23,15 +23,6 @@ class HomePage extends StatelessWidget {
         title: const Text(
           Strings.appTitle,
         ),
-        leading: IconButton(
-          onPressed: () {
-            final dynamic container = StateContainer.of(context);
-            List<ToDo> items = container.todos;
-            items = _killToDo(items, 0);
-            container.updateToDoList(items);
-          },
-          icon: const Icon(Icons.delete_forever_outlined),
-        ),
         actions: const <Widget>[
           ThemeIconToggle(),
         ],
@@ -43,10 +34,10 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton.small(
           child: const Icon(Icons.add),
           onPressed: () {
-            final dynamic container = StateContainer.of(context);
-            List<ToDo> items = container.todos;
-            items = _createToDo(items);
-            container.updateToDoList(items);
+            StateContainer.of(context).addToDo(ToDo(
+              title: 'Test me!',
+              description: (Random().nextInt(69)).toString(),
+            ));
           }),
     );
   }
@@ -74,24 +65,11 @@ class _ToDoReorderaobleStateList extends State<ToDoReorderableList> {
             }
             items.insert(newIndex, items.removeAt(oldIndex));
           });
-          container.updateToDoList(items);
+          container.replaceToDoList(items);
         });
   }
 }
 
 List<ToDoCard> _buildToDoCards(List<ToDo> items) {
   return items.map((value) => ToDoCard(key: UniqueKey(), todo: value)).toList();
-}
-
-List<ToDo> _createToDo(List<ToDo> items) {
-  items.add(
-      ToDo(title: 'Test me!', description: (Random().nextInt(69)).toString()));
-  SharedPrefs().todos = items;
-  return items;
-}
-
-List<ToDo> _killToDo(List<ToDo> items, int index) {
-  items.removeAt(index);
-  SharedPrefs().todos = items;
-  return items;
 }

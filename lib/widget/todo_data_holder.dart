@@ -25,10 +25,25 @@ class StateContainer extends StatefulWidget {
 class _StateContainerState extends State<StateContainer> {
   List<ToDo> todos = SharedPrefs().todos;
 
-  void updateToDoList(List<ToDo> newTodos) {
+  void replaceToDoList(List<ToDo> newTodos) {
     setState(() {
       todos = newTodos;
     });
+    SharedPrefs().todos = todos;
+  }
+
+  void addToDo(ToDo value) {
+    setState(() {
+      todos.add(value);
+    });
+    SharedPrefs().todos = todos;
+  }
+
+  void removeToDo(ToDo value) {
+    setState(() {
+      todos.remove(value);
+    });
+    SharedPrefs().todos = todos;
   }
 
   @override
@@ -59,7 +74,12 @@ class InheritedData extends InheritedWidget {
 
   @override
   bool updateShouldNotify(InheritedData oldWidget) {
-    return oldWidget.todos != todos;
+    // return oldWidget.todos != todos;
+    // print(oldWidget.stateWidget);
+    // print(stateWidget);
+    // print(oldWidget.todos);
+    // print(todos);
+    return true;
     // return true;
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:gotta_do_it/model/todo.dart';
+import 'package:gotta_do_it/widget/todo_data_holder.dart';
 
 class ToDoCard extends StatelessWidget {
   final ToDo todo;
@@ -23,7 +24,7 @@ class ToDoCard extends StatelessWidget {
                 ),
               ),
             ),
-            //const ToDoPin(),
+            ToDoDeleteButton(task: todo),
           ],
         ),
       ),
@@ -56,6 +57,7 @@ class _ToDoToggleButtonState extends State<ToDoToggleButton> {
   }
 }
 
+// TODO: Move timestamp out of body into card
 class ToDoBody extends StatelessWidget {
   final ToDo task;
   const ToDoBody({Key? key, required this.task}) : super(key: key);
@@ -97,6 +99,26 @@ class ToDoTimestamp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(time);
+  }
+}
+
+class ToDoDeleteButton extends StatefulWidget {
+  final ToDo task;
+  const ToDoDeleteButton({Key? key, required this.task}) : super(key: key);
+
+  @override
+  _ToDoDeleteButtonState createState() => _ToDoDeleteButtonState();
+}
+
+class _ToDoDeleteButtonState extends State<ToDoDeleteButton> {
+  @override
+  Widget build(BuildContext context) {
+    return IconButton(
+      icon: const Icon(Icons.delete_outlined),
+      onPressed: () {
+        StateContainer.of(context).removeToDo(widget.task);
+      },
+    );
   }
 }
 

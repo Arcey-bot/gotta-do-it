@@ -1,6 +1,7 @@
 class ToDo {
   String title;
   String description;
+  // TODO: Format this to only show date
   String timeCreated = DateTime.now().toLocal().toString();
   bool done;
 

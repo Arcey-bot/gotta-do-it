@@ -14,7 +14,7 @@ class ThemeIconToggle extends StatelessWidget {
           provider.toggleTheme(isDark);
         },
         icon: Icon(
-          isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined,
+          isDark ? Icons.dark_mode_outlined : Icons.light_mode_outlined,
         ));
   }
 }
