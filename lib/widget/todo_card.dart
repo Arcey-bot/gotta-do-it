@@ -13,18 +13,27 @@ class ToDoCard extends StatelessWidget {
     return Card(
       elevation: 4.0,
       child: Center(
-        child: Row(
+        child: Stack(
           children: <Widget>[
-            ToDoToggleButton(task: todo),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: ToDoBody(
-                  task: todo,
+            Row(
+              children: <Widget>[
+                ToDoToggleButton(task: todo),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: ToDoText(
+                      task: todo,
+                    ),
+                  ),
                 ),
-              ),
+                ToDoDeleteButton(task: todo),
+              ],
             ),
-            ToDoDeleteButton(task: todo),
+            Positioned(
+              bottom: 1.0,
+              right: 1.0,
+              child: ToDoTimestamp(time: todo.timeCreated),
+            ),
           ],
         ),
       ),
@@ -57,10 +66,9 @@ class _ToDoToggleButtonState extends State<ToDoToggleButton> {
   }
 }
 
-// TODO: Move timestamp out of body into card
-class ToDoBody extends StatelessWidget {
+class ToDoText extends StatelessWidget {
   final ToDo task;
-  const ToDoBody({Key? key, required this.task}) : super(key: key);
+  const ToDoText({Key? key, required this.task}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -81,11 +89,6 @@ class ToDoBody extends StatelessWidget {
             ),
             Text(task.description),
           ],
-        ),
-        Positioned(
-          bottom: 1.0,
-          right: 1.0,
-          child: ToDoTimestamp(time: task.timeCreated),
         ),
       ],
     );
