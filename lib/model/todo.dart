@@ -1,8 +1,11 @@
+import 'package:intl/intl.dart';
+
 class ToDo {
+  // final DateFormat _dateFormat = DateFormat('MMM dd, yyyy');
   String title;
   String description;
-  // TODO: Format this to only show date
-  String timeCreated = DateTime.now().toLocal().toString();
+  String timeCreated =
+      DateFormat('MMM dd, yyyy').format(DateTime.now().toLocal());
   bool done;
 
   ToDo({required this.title, this.description = '', this.done = false});
