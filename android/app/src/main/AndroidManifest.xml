@@ -2,7 +2,7 @@
     package="com.example.gotta_do_it">
    <application
         android:label="gotta_do_it"
-        android:icon="@mipmap/ic_launcher">
+        android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
             android:launchMode="singleTop"
