@@ -63,6 +63,8 @@ class AddToDoPopup extends StatelessWidget {
                     onPressed: () {
                       StateContainer.of(context).addToDo(ToDo(
                           title: title.text, description: description.text));
+                      title.clear();
+                      description.clear();
                       Navigator.of(context).pop();
                     },
                     child: const Text('Save')),
