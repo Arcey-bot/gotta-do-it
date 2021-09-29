@@ -5,7 +5,7 @@ class ToDo {
   String title;
   String description;
   String timeCreated =
-      DateFormat('MMM dd, yyyy').format(DateTime.now().toLocal());
+      DateFormat('h:mm aa MMM dd, yyyy').format(DateTime.now().toLocal());
   bool done;
 
   ToDo({required this.title, this.description = '', this.done = false});
