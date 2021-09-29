@@ -3,7 +3,10 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import 'package:provider/provider.dart';
+
 import 'package:gotta_do_it/model/todo.dart';
+import 'package:gotta_do_it/provider/theme_provider.dart';
 import 'package:gotta_do_it/widget/todo_data_holder.dart';
 
 class ToDoCard extends StatelessWidget {
@@ -12,31 +15,47 @@ class ToDoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4.0,
-      child: Center(
-        child: Stack(
-          children: <Widget>[
-            Row(
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 8.0),
+      child: Card(
+        elevation: 4.0,
+        child: Dismissible(
+          key: UniqueKey(),
+          resizeDuration: const Duration(milliseconds: 500),
+          background: Container(
+              color: themeProvider.isDarkMode
+                  ? Colors.grey[900]
+                  : Colors.grey[200]),
+          onDismissed: ((dir) {
+            StateContainer.of(context).removeToDo(todo);
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text('${todo.title} removed')));
+          }),
+          child: Center(
+            child: Stack(
               children: <Widget>[
-                ToDoToggleButton(task: todo),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ToDoText(
-                      task: todo,
+                Row(
+                  children: <Widget>[
+                    ToDoToggleButton(task: todo),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: ToDoText(
+                          task: todo,
+                        ),
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-                ToDoDeleteButton(task: todo),
+                Positioned(
+                  bottom: 1.0,
+                  right: 2.0,
+                  child: ToDoTimestamp(time: todo.timeCreated),
+                ),
               ],
             ),
-            Positioned(
-              bottom: 1.0,
-              right: 1.0,
-              child: ToDoTimestamp(time: todo.timeCreated),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -83,13 +102,20 @@ class ToDoText extends StatelessWidget {
             Text(
               task.title,
               softWrap: true,
-              style: const TextStyle(
+              style: TextStyle(
                 color: Colors.blueAccent,
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold,
+                decoration: task.done ? TextDecoration.lineThrough : null,
               ),
             ),
-            Text(task.description),
+            Text(
+              task.description,
+              softWrap: true,
+              style: TextStyle(
+                decoration: task.done ? TextDecoration.lineThrough : null,
+              ),
+            ),
           ],
         ),
       ],
@@ -109,26 +135,6 @@ class ToDoTimestamp extends StatelessWidget {
         fontStyle: FontStyle.italic,
         fontSize: 9.0,
       ),
-    );
-  }
-}
-
-class ToDoDeleteButton extends StatefulWidget {
-  final ToDo task;
-  const ToDoDeleteButton({Key? key, required this.task}) : super(key: key);
-
-  @override
-  _ToDoDeleteButtonState createState() => _ToDoDeleteButtonState();
-}
-
-class _ToDoDeleteButtonState extends State<ToDoDeleteButton> {
-  @override
-  Widget build(BuildContext context) {
-    return IconButton(
-      icon: const Icon(Icons.delete_outlined),
-      onPressed: () {
-        StateContainer.of(context).removeToDo(widget.task);
-      },
     );
   }
 }

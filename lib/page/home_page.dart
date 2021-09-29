@@ -1,14 +1,12 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:gotta_do_it/util/shared_prefs.dart';
+import 'package:gotta_do_it/page/add_todo_popup.dart';
+import 'package:gotta_do_it/route/custom_route.dart';
 
 import 'package:gotta_do_it/util/strings.dart';
 import 'package:gotta_do_it/util/theme_icon_toggle.dart';
 import 'package:gotta_do_it/widget/todo_card.dart';
 import 'package:gotta_do_it/model/todo.dart';
 import 'package:gotta_do_it/widget/todo_data_holder.dart';
-import 'package:provider/provider.dart';
 
 // List<ToDo> items = SharedPrefs().todos;
 // final GlobalKey<_ToDoReorderaobleStateList> todoList = GlobalKey();
@@ -28,16 +26,19 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: const Padding(
-        padding: EdgeInsets.all(8.0),
+        padding: EdgeInsets.symmetric(vertical: 8.0),
         child: ToDoReorderableList(),
       ),
       floatingActionButton: FloatingActionButton.small(
           child: const Icon(Icons.add),
           onPressed: () {
-            StateContainer.of(context).addToDo(ToDo(
-              title: 'Test me!',
-              description: (Random().nextInt(69)).toString(),
-            ));
+            // StateContainer.of(context).addToDo(ToDo(
+            //   title: 'Test me!',
+            //   description: (Random().nextInt(69)).toString(),
+            // ));
+            Navigator.of(context).push(CustomRoute(builder: (context) {
+              return const AddToDoPopup();
+            }));
           }),
     );
   }
