@@ -3,19 +3,17 @@ import 'dart:ui';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart';
-
 import 'package:gotta_do_it/model/todo.dart';
-import 'package:gotta_do_it/provider/theme_provider.dart';
 import 'package:gotta_do_it/widget/todo_data_holder.dart';
 
 class ToDoCard extends StatelessWidget {
   final ToDo todo;
-  const ToDoCard({Key? key, required this.todo}) : super(key: key);
+  final bool isDark;
+  const ToDoCard({Key? key, required this.todo, required this.isDark})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
@@ -23,10 +21,8 @@ class ToDoCard extends StatelessWidget {
         child: Dismissible(
           key: UniqueKey(),
           resizeDuration: const Duration(milliseconds: 500),
-          background: Container(
-              color: themeProvider.isDarkMode
-                  ? Colors.grey[900]
-                  : Colors.grey[200]),
+          background:
+              Container(color: isDark ? Colors.grey[900] : Colors.grey[200]),
           onDismissed: ((dir) {
             StateContainer.of(context).removeToDo(todo);
             ScaffoldMessenger.of(context)

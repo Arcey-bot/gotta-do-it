@@ -1,14 +1,10 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
-import 'package:gotta_do_it/model/todo.dart';
-import 'package:gotta_do_it/util/shared_prefs.dart';
-import 'package:gotta_do_it/util/theme_icon_toggle.dart';
-import 'package:gotta_do_it/widget/todo_card.dart';
+
 import 'package:provider/provider.dart';
 
 import 'package:gotta_do_it/page/home_page.dart';
 import 'package:gotta_do_it/provider/theme_provider.dart';
+import 'package:gotta_do_it/util/shared_prefs.dart';
 import 'package:gotta_do_it/util/strings.dart';
 import 'package:gotta_do_it/widget/todo_data_holder.dart';
 
