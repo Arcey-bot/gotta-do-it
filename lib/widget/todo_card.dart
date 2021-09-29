@@ -15,7 +15,7 @@ class ToDoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
+    final themeProvider = Provider.of<ThemeProvider>(context, listen: false);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 8.0),
       child: Card(
@@ -81,7 +81,9 @@ class _ToDoToggleButtonState extends State<ToDoToggleButton> {
       onChanged: (bool? value) {
         setState(() {
           widget.task.done = value!;
+          StateContainer.of(context).removeToDo(widget.task);
         });
+        // StateContainer.of(context).toDoComplete(widget.task, value!);
       },
     );
   }
@@ -102,19 +104,15 @@ class ToDoText extends StatelessWidget {
             Text(
               task.title,
               softWrap: true,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Colors.blueAccent,
                 fontSize: 16.0,
                 fontWeight: FontWeight.bold,
-                decoration: task.done ? TextDecoration.lineThrough : null,
               ),
             ),
             Text(
               task.description,
               softWrap: true,
-              style: TextStyle(
-                decoration: task.done ? TextDecoration.lineThrough : null,
-              ),
             ),
           ],
         ),

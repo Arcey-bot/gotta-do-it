@@ -39,6 +39,11 @@ class _StateContainerState extends State<StateContainer> {
     SharedPrefs().todos = todos;
   }
 
+  void toDoComplete(ToDo todo, bool value) {
+    todos[todos.indexOf(todo)].done = value;
+    SharedPrefs().todos = todos;
+  }
+
   void removeToDo(ToDo value) {
     setState(() {
       todos.remove(value);

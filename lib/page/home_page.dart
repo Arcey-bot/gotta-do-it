@@ -8,9 +8,6 @@ import 'package:gotta_do_it/widget/todo_card.dart';
 import 'package:gotta_do_it/model/todo.dart';
 import 'package:gotta_do_it/widget/todo_data_holder.dart';
 
-// List<ToDo> items = SharedPrefs().todos;
-// final GlobalKey<_ToDoReorderaobleStateList> todoList = GlobalKey();
-
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -32,10 +29,6 @@ class HomePage extends StatelessWidget {
       floatingActionButton: FloatingActionButton.small(
           child: const Icon(Icons.add),
           onPressed: () {
-            // StateContainer.of(context).addToDo(ToDo(
-            //   title: 'Test me!',
-            //   description: (Random().nextInt(69)).toString(),
-            // ));
             Navigator.of(context).push(CustomRoute(builder: (context) {
               return const AddToDoPopup();
             }));
