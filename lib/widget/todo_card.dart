@@ -79,6 +79,8 @@ class _ToDoToggleButtonState extends State<ToDoToggleButton> {
           widget.task.done = value!;
           StateContainer.of(context).removeToDo(widget.task);
         });
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('${widget.task.title} completed')));
         // StateContainer.of(context).toDoComplete(widget.task, value!);
       },
     );
