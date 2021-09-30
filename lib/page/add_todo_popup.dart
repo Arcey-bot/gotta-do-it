@@ -67,7 +67,7 @@ class AddToDoPopup extends StatelessWidget {
                           title: title.text, description: description.text));
                       Navigator.of(context).pop();
                       ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('${title.text} removed')));
+                          SnackBar(content: Text('${title.text} saved')));
                     },
                     child: const Text('Save')),
               ],
