@@ -22,7 +22,7 @@ class ToDoCard extends StatelessWidget {
           key: UniqueKey(),
           resizeDuration: const Duration(milliseconds: 500),
           background:
-              Container(color: !isDark ? Colors.grey[900] : Colors.grey[200]),
+              Container(color: isDark ? Colors.grey[900] : Colors.grey[200]),
           onDismissed: ((dir) {
             StateContainer.of(context).removeToDo(todo);
             ScaffoldMessenger.of(context)
