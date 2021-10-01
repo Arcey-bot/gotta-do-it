@@ -2,6 +2,6 @@
 
 A To Do List built with Flutter.
 
-## Getting Started
+## Showcase
 
 <img src="demo_video.gif" width="350"></a>
